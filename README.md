@@ -3,7 +3,7 @@ Glyphs Scripts.
 
 ## About
  
-These are scripts for [Glyphs](https://glyphsapp.com/). Some may not work in Glyphs 2.
+These are scripts for [Glyphs 3](https://glyphsapp.com/). Some may not work in Glyphs 2.
  
 ### Installation: 
 Put the scripts into Scripts folder: Library – Application Support - Glyphs - Scripts
