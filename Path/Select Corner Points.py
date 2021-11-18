@@ -1,10 +1,10 @@
-#MenuTitle:	Select On-Curve Points
+#MenuTitle:	Select Corner Points
 # -*- coding: utf-8 -*-
 #Edit by Tanukizamurai
 
 __doc__="""
-スムースなオンカープポイント（緑丸）を一括選択します。
-Select only smooth on-curve points (green circles).
+コーナーポイント（青四角）及び線端を一括選択します。
+Select only off-curve points (blue square).
 """
 
 font = Glyphs.font
@@ -12,5 +12,5 @@ thisLayer = font.selectedLayers[0]
 
 for thisPath in thisLayer.paths:
 	for thisNode in thisPath.nodes:
-		if thisNode.smooth == True:
+		if thisNode.smooth == False:
 			thisNode.selected = True
