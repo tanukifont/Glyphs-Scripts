@@ -1,9 +1,9 @@
-#MenuTitle:	Select On-Curve Points
+#MenuTitle:	Select Off-curve Points
 # -*- coding: utf-8 -*-
 #Edit by Tanukizamurai
 
 __doc__="""
-コーナーポイント（青四角）及び線端を一括選択します。
+ハンドルのみを一括選択します。
 Select only off-curve points (blue square).
 """
 
@@ -12,5 +12,6 @@ thisLayer = font.selectedLayers[0]
 
 for thisPath in thisLayer.paths:
 	for thisNode in thisPath.nodes:
-		if thisNode.smooth == False:
+		print(thisNode.type, thisNode.smooth)
+		if thisNode.type == "offcurve":
 			thisNode.selected = True
