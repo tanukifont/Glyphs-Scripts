@@ -46,14 +46,35 @@ try:
 
 					print(nodeDic, len(nodeDic))
 					
-					nodeDic2 = sorted(nodeDic.items(), key=lambda x:x[1])
-					print(nodeDic2)
-					print(nodeDic2[0][0],nodeDic2[1][0])
-					cutNode1 = path.nodes[nodeDic2[0][0]]
-					cutNode2 = path.nodes[nodeDic2[1][0]]
-					cutId1 = nodeDic2[0][0]
-					cutId2 = nodeDic2[1][0]
-					print(cutId1, cutId2, len(nodeDic))
+					
+						
+
+					# 単純に一番短い線を消す場合
+					# nodeDic2 = sorted(nodeDic.items(), key=lambda x:x[1])
+					# print(nodeDic2)
+					# print(nodeDic2[0][0],nodeDic2[1][0])
+					# cutNode1 = path.nodes[nodeDic2[0][0]]
+					# cutNode2 = path.nodes[nodeDic2[1][0]]
+					# cutId1 = nodeDic2[0][0]
+					# cutId2 = nodeDic2[1][0]
+					# print(cutId1, cutId2, len(nodeDic))
+
+					# 対になるパスとの合計で短辺を決定する場合
+					calcEdge = []
+					calcHalfNum = len(nodeDic)//2
+					print(calcHalfNum)
+					for i in range(calcHalfNum):
+						print(i,nodeDic[i])
+						print(i,nodeDic[i+calcHalfNum])
+						calcEdge.append(nodeDic[i]+nodeDic[i+calcHalfNum])
+					print(calcEdge)
+					minEdge = min(calcEdge)
+					print(minEdge)
+					print(calcEdge.index(minEdge))
+					cutId1 = calcEdge.index(minEdge)
+					cutId2 = cutId1 + calcHalfNum
+
+
 #					print(selectedNodes)
 					newPath1 = GSPath()
 					newPath2 = GSPath()
