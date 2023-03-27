@@ -3,6 +3,8 @@
 __doc__="""
 """
 
+# Special Thanks: Toshi Omagari
+# This python script is based on the script that he provided me.
 
 
 overlap = 100 # グリフの重なる量
