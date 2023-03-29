@@ -9,9 +9,11 @@ __doc__="""
 
 overlap = 100 # グリフの重なる量
 offsetThickness = 40 # アウトラインの太さ
+
 do_Offset = True # アウトラインのやり直し True or False
 do_Components = True # コンポーネントグリフのやり直し True or False
 do_Features = True # クラスとフィーチャーのやり直し True or False
+
 prev_overlaps_later = False	#前の文字が上に重なるように設定、Falseの時は後の文字が上になる
 
 # かな文字・数字ではないが噛み合って欲しいグリフ名のリスト。コンマ区切りで各グリフ名は""囲い
@@ -94,6 +96,7 @@ if do_Offset is True:
 		maskGlyph.widthMetricsKey = None
 
 		maskLayer.decomposeComponents()		#全てのコンポーネントを分解
+		maskLayer.removeOverlap()			#オーバーラップ輪郭の削除
 		thi = str(offsetThickness/2)		#アウトラインの1/2の太さを設定
 		offsetFilter.processLayer_withArguments_(maskLayer, ['GlyphsFilterOffsetCurve', thi, thi, '0', '0'])	#オフセットの実行
 		maskLayer.background.shapes = []	#背景レイヤーのシェイプを消去
