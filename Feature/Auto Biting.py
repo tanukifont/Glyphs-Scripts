@@ -16,6 +16,8 @@ do_Features = True # クラスとフィーチャーのやり直し True or False
 
 prev_overlaps_later = False	#前の文字が上に重なるように設定、Falseの時は後の文字が上になる
 
+do_Round_Mask = True	#マスク用レイヤーに角丸を実行
+
 # かな文字・数字ではないが噛み合って欲しいグリフ名のリスト。コンマ区切りで各グリフ名は""囲い
 # フィーチャーグループの仕様通りの順番で記述すること。（要確認）
 commonGlyphNames = ["comma-han" , "period-han" , "wavedash" , "prolonged-kana"]
@@ -32,9 +34,13 @@ f = Glyphs.font
 f.disableUpdateInterface() #フォントビューの表示更新をOFFにする
 
 # オフセットフィルターを選択
-for offsetFilter in Glyphs.filters:
-	if offsetFilter.__class__.__name__ == 'GlyphsFilterOffsetCurve':
-		break
+GlyphsFilterOffsetCurve = NSClassFromString("GlyphsFilterOffsetCurve")
+GlyphsFilterRoundCorner = NSClassFromString("GlyphsFilterRoundCorner")
+
+# # オフセットフィルターを選択
+# for offsetFilter in Glyphs.filters:
+# 	if offsetFilter.__class__.__name__ == 'GlyphsFilterOffsetCurve':
+# 		break
 
 hiraganas = []	#ひらがなリスト
 katakanas = []	#カタカナリスト
@@ -97,8 +103,16 @@ if do_Offset is True:
 
 		maskLayer.decomposeComponents()		#全てのコンポーネントを分解
 		maskLayer.removeOverlap()			#オーバーラップ輪郭の削除
-		thi = str(offsetThickness/2)		#アウトラインの1/2の太さを設定
-		offsetFilter.processLayer_withArguments_(maskLayer, ['GlyphsFilterOffsetCurve', thi, thi, '0', '0'])	#オフセットの実行
+		thi = offsetThickness/2		#アウトラインの1/2の太さを設定
+
+		#パスのオフセットの実行
+		# offsetFilter.processLayer_withArguments_(maskLayer, ['GlyphsFilterOffsetCurve', thi, thi, '0', '0'])	#オフセットの実行
+		GlyphsFilterOffsetCurve.offsetLayer_offsetX_offsetY_makeStroke_autoStroke_position_metrics_error_shadow_capStyleStart_capStyleEnd_keepCompatibleOutlines_(maskLayer, thi, thi, False, False, 0, False, None, None, 0, 0, True)
+
+		# 角丸の実行
+		if do_Round_Mask:
+			GlyphsFilterRoundCorner.roundLayer_radius_checkSelection_visualCorrect_grid_(maskLayer, offsetThickness, True, True, False)
+
 		maskLayer.background.shapes = []	#背景レイヤーのシェイプを消去
 		for s in l.shapes:
 			maskLayer.background.shapes.append(s.copy())	#背景レイヤーにコピー元のシェイプをコピー
