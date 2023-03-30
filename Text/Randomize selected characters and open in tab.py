@@ -7,16 +7,17 @@ __doc__="""
 Randomize selected characters and open in tab.
 """
 from GlyphsApp import *
+import random
 
 Font = Glyphs.font
 
 # 選択されたグリフのstringをリスト形式で取得する
 def get_selected_glyphs_characters():
-    characters = []
-    for layer in Glyphs.font.selectedLayers:
-        glyph = layer.parent
-        characters.append(glyph.string)
-    return characters
+	characters = []
+	for layer in Glyphs.font.selectedLayers:
+		glyph = layer.parent
+		characters.append("/" + glyph.name)
+	return characters
 
 # 選択されたグリフのstringをリスト形式で取得する
 characters = get_selected_glyphs_characters()
@@ -26,4 +27,4 @@ random.shuffle(characters)
 rdmChr = ''.join(characters)
 
 Font.newTab(rdmChr)
-print(rdmChr)
+print("tab is opened.\n" + rdmChr)
