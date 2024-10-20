@@ -21,7 +21,10 @@ Glyphsでのフォント制作を効率化するためのツールです。
 ## 使い方
 スクリプトをGlyphsで実行するには、メニューから［スクリプト］を選択し、実行したいスクリプトを選択します。
 
+## その他
+動作報告・不具合報告大歓迎です。プルリクエストも大歓迎です。
+
 ## ライセンス
-Copyright 2021 Tanukizamurai. 
+Copyright 2024 Tanukizamurai. 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use the software provided here except in compliance with the License. You may obtain a copy of the License at 
 http://www.apache.org/licenses/LICENSE-2.0
