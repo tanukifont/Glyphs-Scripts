@@ -1,20 +1,19 @@
-#MenuTitle: 選択した文字をランダムにしてタブで開く
+#MenuTitle: 選択した文字をランダムに並び替えたタブを作成
 # -*- coding: utf-8 -*-
-# Edit by Tanukizamurai
-
 __doc__="""
-選択した文字をランダムにしてタブで開きます
-Randomize selected characters and open in tab.
+選択した文字をランダムに並び替えたタブを作成します。
 """
+
 from GlyphsApp import *
 import random
 
-Font = Glyphs.font
+# フォントオブジェクトを取得
+font = Glyphs.font
 
-# 選択されたグリフのstringをリスト形式で取得する
+# 選択されたグリフの名前をリスト形式で取得する関数
 def get_selected_glyphs_characters():
     characters = []
-    for layer in Glyphs.font.selectedLayers:
+    for layer in font.selectedLayers:
         glyph = layer.parent
         characters.append("/" + glyph.name)
     return characters
@@ -24,16 +23,16 @@ def show_message(message):
     Glyphs.showNotification("スクリプトメッセージ", message)
     print(message)  # マクロパネルにもメッセージを出力
 
-# 選択されたグリフのstringをリスト形式で取得する
+# 選択されたグリフの名前を取得
 characters = get_selected_glyphs_characters()
 
 if len(characters) == 0:
     show_message("選択したグリフがありません。")
 else:
-    # 文字列をランダム生成
+    # 文字列をランダムに生成
     random.shuffle(characters)
     rdmChr = ''.join(characters)
 
     # 新しいタブでランダムな文字列を開く
-    Font.newTab(rdmChr)
+    font.newTab(rdmChr)
     show_message("新しいタブが開かれました。\n" + rdmChr)

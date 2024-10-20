@@ -28,6 +28,8 @@ commonNumGlyphNames = ["comma"]
 import GlyphsApp
 
 Glyphs.clearLog()	#マクロウィンドウのログ消去
+Glyphs.showMacroWindow()
+
 
 f = Glyphs.font
 
@@ -44,20 +46,19 @@ GlyphsFilterRoundCorner = NSClassFromString("GlyphsFilterRoundCorner")
 
 hiraganas = []	#ひらがなリスト
 katakanas = []	#カタカナリスト
-numbersHalf = []	#全角数字リスト
+numbersHalf = []	#半角数字リスト
 
 for g in f.glyphs:
-	if g.unicodes != None and g.category == 'Letter':	#Unicodeが存在、かつカテゴリーが「Letter」の場合
+	if g.unicodes != None and g.category == 'Letter' and g.export == True:	#Unicodeが存在、かつカテゴリーが「Letter」の場合
 		if g.name[-4:] == 'hira':	#名前の末尾が「hira」の場合はひらがなリストにレイヤーを追加
 			hiraganas.append(g.layers[0])
 		elif g.name[-4:] == 'kata':	#名前の末尾が「kata」の場合はカタカナリストにレイヤーを追加
 			katakanas.append(g.layers[0])
-
-	if g.unicodes != None and g.category == 'Number':	#同様に数字リストの作成を実行
-		if g.name[-5:] != '.full':
+	if g.unicodes != None and g.category == 'Number' and g.subCategory == 'Decimal Digit' and g.export == True:	#同様に数字リストの作成を実行
+		if g.name[-5:] != '.full' and g.name[-8:] != '.circled':
 			numbersHalf.append(g.layers[0])
 
-print("NumbersHalf_count:" + str(len(numbersHalf)))
+# print("NumbersHalf_count:" + str(len(numbersHalf)))
 
 commons = []	#その他一般リスト
 for c in commonGlyphNames:	#commonGlyphNamesリストの文字列を参照して、その他一般リストにレイヤーを追加
@@ -112,6 +113,10 @@ if do_Offset is True:
 		# 角丸の実行
 		if do_Round_Mask:
 			GlyphsFilterRoundCorner.roundLayer_radius_checkSelection_visualCorrect_grid_(maskLayer, offsetThickness, True, True, False)
+
+		# 重なったパスを合体
+		maskLayer.removeOverlap()
+
 
 		maskLayer.background.shapes = []	#背景レイヤーのシェイプを消去
 		for s in l.shapes:
